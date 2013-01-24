@@ -1,0 +1,113 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <title></title> 
+    <link rel="stylesheet" href="js/jquery.mobile-1.0.min.css" />
+	<style type="text/css">
+		.ui-page { background: #fff;}
+		.ui-btn-text {
+			overflow:visible;
+		}
+		
+		
+		.ui-icon-mc-phone {
+			background-image: url(img/phone.png);
+			width:18px;
+			height:18px;
+			background-size: 18px 18px;
+			background-position: center center;
+		}
+		
+		.ui-icon-mc-world {
+			background:none;
+			background-image: url(img/world.png);
+			width:18px;
+			height:18px;
+			background-size: 18px 18px;
+			background-position: center center;
+		}
+		
+		.ui-icon, 
+		.ui-icon-mc-phone:after { border-radius: 0px; } 
+		.ui-icon-mc-world:after { border-radius: 0px; } 
+		
+		#imgWrapper {
+			text-align:center;
+		}
+		
+		#imgWrapper img {
+			border:3px solid #000;
+			margin:3px;
+			width:256px;
+		}
+		
+		@media all and (orientation:landscape) {
+			#imgWrapper img {
+				float:left;
+				
+			}
+			
+			#entryData {
+				padding:5px 10px;
+			}
+		}
+		
+		
+		.clearfix:after {
+			visibility: hidden;
+			display: block;
+			font-size: 0;
+			content: " ";
+			clear: both;
+			height: 0;
+			}
+		* html .clearfix             { zoom: 1; } /* IE6 */
+		*:first-child+html .clearfix { zoom: 1; } /* IE7 */
+		
+		
+	</style>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+	<script src="js/jquery.mobile-1.0.min.js"></script>
+    <script src="js/main.js"></script>
+</head> 
+<body> 
+
+<div data-role="page" id="mainPage">
+
+    <div data-role="header" data-position="fixed">
+        <h1></h1>
+    </div>
+
+    <div data-role="content">  
+		<div id="status"></div>  
+        <ul id="linksList" data-role="listview" data-inset="false"></ul>
+    </div>
+
+    <div data-role="footer">
+        <h4>Missing Children</h4>
+    </div>
+
+    
+</div>
+
+<div data-role="page" id="contentPage">
+
+    <div data-role="header" data-position="fixed">
+        <a href="#mainPage" data-rel="back">Home</a>
+        <h1></h1>
+    </div>
+
+    <div data-role="content" id="entryText">
+    	<div id="entryInfo" class="clearfix">
+    	</div>
+		<div id="entryContactInfo">
+			<ul id="infoList" data-role="listview" data-inset="true">
+			</ul>
+		</div>
+    </div>
+        
+</div>
+
+</body>
+</html>
