@@ -23,12 +23,12 @@
 	var selectedEntry = "";
 	
 	//listen for detail links
-	$(".contentLink").live("click", function() {
+	$(document).on("touchend", ".contentLink", function() {
 		selectedEntry = $(this).data("entryid");
 	});
 	
 	//Listen for main page
-	$("#mainPage").live("pageinit", function() {
+	$(document).on("pageinit", "#mainPage", function() {
 		//Set the title
 		$("#head", this).text(TITLE);
 	
@@ -75,12 +75,12 @@
 	
 	});
 	
-	$("#contentPage").live("pagebeforeload", function(prepage) {
+	$(document).on("pagebeforeload", "#contentPage", function(prepage) {
 		$("#imgWrapper").html("");			
 	});
 	
 	//Listen for the content page to load
-	$("#contentPage").live("pageshow", function(prepage) {
+	$(document).on("pageshow", "#contentPage", function(prepage) {
 		//Set the title
 		//$("h1", this).text(entries[selectedEntry].title);
 		var contentHTML = "";
@@ -107,17 +107,10 @@
 				
 			}
 			
-		
-			
-		   	
-		   
 		   
 		  } else {
 		    console.log("No match");
 		  }
-
-		
-		
 		
 		console.log(desc.match(re));
 		contentHTML += '<div id="imgWrapper">';
@@ -127,10 +120,7 @@
 		contentHTML += '<div id="entryData">';
 		contentHTML += '<h3>' + entries[selectedEntry].type + '</h3>' + desc;
 		contentHTML += '</div>';
-		
-		
-		
-		
+	
 		
 		$("#entryInfo",this).html(contentHTML);
 		
