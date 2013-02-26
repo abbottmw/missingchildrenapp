@@ -8,19 +8,21 @@
 	
 	//EDIT THESE LINES
 	
-	var url = 'http://www.missingkids.com/missingkids/servlet/XmlServlet?act=rss';
+	var baseurl = 'http://www.missingkids.com/missingkids/servlet/XmlServlet?act=rss'
+	var url = baseurl;
 	var s = '';
-	var api = "//ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=" + encodeURIComponent(url);
-	api += "&output=xml&num=-1&callback=?"
+	//var api = "//ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=" + encodeURIComponent(url);
+	//api += "&output=xml&num=-1&callback=?"
 	
 	
 	//Title of the blog
 	var TITLE = "Missing Children";
 	//RSS url
-	var RSS = api;
+	//var RSS = api;
 	//Stores entries
 	var entries = [];
 	var selectedEntry = "";
+	
 	
 	//listen for detail links
 	$(document).on("touchend", ".contentLink", function() {
@@ -29,50 +31,36 @@
 	
 	//Listen for main page
 	$(document).on("pageinit", "#mainPage", function() {
+		
+		
 		//Set the title
-		$("#head", this).text(TITLE);
+		$("h1", this).text(TITLE);
 	
-		$.getJSON(RSS, {}, function(res, code) {
-			entries = [];
-			var xml = $.parseXML(res.responseData.xmlString);
-			var items = $(xml).find("item");
-			var imgUrl = "";
-			$.each(items, function(i, v) {
-				//alert($(v).find("enclosure").attr('url'));
-				entry = { 
-					title:$(v).find("title").text().split(':')[1],
-					type:$(v).find("title").text().split(':')[0],  
-					link:$(v).find("link").text(), 
-					description:$.trim($(v).find("description").text()),
-					pubDate:$(v).find("pubDate").text(),
-					img:$(v).find("enclosure").attr('url'),
-					//look for img without the 't' appended to it. large image not included in rss feed.
-					imgBig:$(v).find("enclosure").attr('url').replace(new RegExp( "(.*)[tT](\..*)$", "gi" ),"$1$2")
-					
-					//imgBig:imgUrl.replace('/(.*)[tT](\..*)$/')
-					
-					
-					
-				};
-				entries.push(entry);
-			});
+		getData(url);
+		
+		
+		
 	
-			//now draw the list
-			var s = '';
-			$.each(entries, function(i, v) {
-				//s += '<li><a href="#contentPage" class="contentLink" data-entryid="'+i+'">' + v.title + '</a></li>';
-					s += '<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-up-c ui-li-has-arrow ui-li ui-li-has-thumb">';
-					s += '<div class="ui-btn-inner ui-li"><div class="ui-btn-text"><a href="#contentPage" class="ui-link-inherit contentLink" data-entryid="'+i+'">';
-					s += '<img src="' + v.img + '" class="ui-li-thumb">';
-					s += '<h3 class="ui-li-heading">' + v.title + '</h3>';
-					s += '<p class="ui-li-desc">'+v.pubDate+'</p>';
-					s += '</a></div>'
-					s+= '</li>';
-			});
-			$("#linksList").html(s);
-			$("#linksList").listview("refresh");
-		});
+	});
 	
+	
+	$(document).on("click", ".stateLink", function(e) {
+			var item = $(this);
+			var state = $(item).data("state");
+			if(state && state.length){
+				url = baseurl + '&LanguageCountry=en_US&orgPrefix=NCMC&state=' + state;
+				$.when(getData(url)).then(function(e){
+					//Set the title
+					//full state $(item).find('a').text()
+					$("h1", '#mainPage').text(TITLE + " in " + state);
+				});
+				
+				
+			}else{
+				$("h1", '#mainPage').text(TITLE);
+				getData(baseurl);
+			}
+			
 	});
 	
 	$(document).on("pagebeforeload", "#contentPage", function(prepage) {
@@ -132,5 +120,65 @@
 		//$("#infoList").html(contentHTML);
 		$(infoList).listview("refresh");
 	});
-		
 	
+	
+	
+	
+	
+	//get Data function	
+	function getData(url){
+		
+		
+		var api = "//ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=" + encodeURIComponent(url);
+		api += "&output=xml&num=-1&callback=?"
+
+		
+		var data = $.getJSON(api, {}, function(res, code) {
+			entries = [];
+			var xml = $.parseXML(res.responseData.xmlString);
+			var items = $(xml).find("item");
+			var imgUrl = "";
+			$.each(items, function(i, v) {
+				//alert($(v).find("enclosure").attr('url'));
+				entry = { 
+					title:$(v).find("title").text().split(':')[1],
+					type:$(v).find("title").text().split(':')[0],  
+					link:$(v).find("link").text(), 
+					description:$.trim($(v).find("description").text()),
+					pubDate:$(v).find("pubDate").text(),
+					img:$(v).find("enclosure").attr('url'),
+					//look for img without the 't' appended to it. large image not included in rss feed.
+					imgBig:$(v).find("enclosure").attr('url').replace(new RegExp( "(.*)[tT](\..*)$", "gi" ),"$1$2")
+					
+					//imgBig:imgUrl.replace('/(.*)[tT](\..*)$/')
+					
+					
+					
+				};
+				entries.push(entry);
+			});
+	
+			//now draw the list
+			var s = '';
+			$.each(entries, function(i, v) {
+				//s += '<li><a href="#contentPage" class="contentLink" data-entryid="'+i+'">' + v.title + '</a></li>';
+					s += '<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-up-c ui-li-has-arrow ui-li ui-li-has-thumb">';
+					s += '<div class="ui-btn-inner ui-li"><div class="ui-btn-text"><a href="#contentPage" class="ui-link-inherit contentLink" data-entryid="'+i+'">';
+					s += '<img src="' + v.img + '" class="ui-li-thumb">';
+					s += '<h3 class="ui-li-heading">' + v.title + '</h3>';
+					s += '<p class="ui-li-desc">'+v.pubDate+'</p>';
+					s += '</a></div>'
+					s+= '</li>';
+			});
+			$("#linksList").html(s);
+			$("#linksList").listview("refresh");
+			//close panel
+			$( "#statesPanel" ).panel( "close" );
+		});
+		
+		
+		return data;
+		
+		
+		
+	}
