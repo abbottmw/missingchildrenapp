@@ -1,87 +1,41 @@
-<!DOCTYPE html> 
-<html> 
-    <head> 
-    <meta name="viewport" content="width=device-width, initial-scale=1">    
-    <title></title> 
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.css" />
-
-	<style type="text/css">
-		.ui-page { background: #fff;}
-		.ui-btn-text {
-			overflow:visible;
-		}
-		
-		.ui-panel {
-			background-color:#000000;
-		}
-		
-		
-		.ui-icon-mc-phone {
-			background-image: url(img/phone.png);
-			width:18px;
-			height:18px;
-			background-size: 18px 18px;
-			background-position: center center;
-		}
-		
-		.ui-icon-mc-world {
-			background:none;
-			background-image: url(img/world.png);
-			width:18px;
-			height:18px;
-			background-size: 18px 18px;
-			background-position: center center;
-		}
-		
-		.ui-icon, 
-		.ui-icon-mc-phone:after { border-radius: 0px; } 
-		.ui-icon-mc-world:after { border-radius: 0px; } 
-		
-		#imgWrapper {
-			text-align:center;
-		}
-		
-		#imgWrapper img {
-			border:3px solid #000;
-			margin:3px;
-			width:256px;
-		}
-		
-		@media all and (orientation:landscape) {
-			#imgWrapper img {
-				float:left;
-				
-			}
-			
-			#entryData {
-				padding:5px 10px;
-			}
-		}
-		
-		
-		.clearfix:after {
-			visibility: hidden;
-			display: block;
-			font-size: 0;
-			content: " ";
-			clear: both;
-			height: 0;
-			}
-		
-	</style>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
-    <script src="js/main.js"></script>
-	<script>
-		
-	</script>
-</head> 
-<body> 
-
-<div data-role="page" id="mainPage">
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">   
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+<meta http-equiv="cleartype" content="on">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
 	
-	 <div data-role="panel" id="statesPanel" data-display="overlay" data-theme="a" data-position="right">
+<title>National Missing Children</title>
+	
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/icons/icon.png">
+	<!-- For first-generation iPad: -->
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/icons/icon.png">
+	<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+	<link rel="apple-touch-icon-precomposed" href="images/icons/icon.png">
+	
+	<!-- For nokia devices and desktop browsers : -->
+	<link rel="shortcut icon" href="images/icons/favicon.ico" />
+	
+	<link rel="stylesheet" href="css/jquery.mobile-1.3.1.min.css" />
+	<link rel="stylesheet" href="css/main.css" />
+	<script src="scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+	<script src="scripts/jquery.mobile-1.3.1.min.js" type="text/javascript"></script>
+	<script src="scripts/NCMEC.js" type="text/javascript"></script>
+	<script src="scripts/main.js" type="text/javascript"></script>
+</head>
+
+
+<body>
+
+<div data-role="page" id="main">
+	<div data-role="panel" id="statesPanel" data-display="overlay" data-theme="a" data-position="right">
+		
 		<ul id="statesList" data-role="listview" data-inset="false" data-theme="a">
+			<li class="close" data-state="" data-theme='a' data-icon="delete"><a href="#" data-rel="close">&nbsp;</a></li>
 			<li class="stateLink" data-state="" data-theme='b' data-icon="false"><a href="#">Latest Entries</a></li>
 			<li class="stateLink" data-icon="false" data-state="AL"><a href="#">Alabama</a></li>
 			<li class="stateLink" data-icon="false" data-state="AK"><a href="#">Alaska</a></li>
@@ -134,39 +88,56 @@
 			<li class="stateLink" data-icon="false" data-state="WY"><a href="#">Wyoming</a></li>
 		</ul>
     </div><!-- /panel -->
+
 	
-    <div data-role="header" data-position="fixed">
-		<h1></h1>
-		<a href="#statesPanel" data-icon="bars" data-iconpos="notext" class="ui-btn-right">Save</a>
-    </div>
-
-    <div data-role="content">  
+	<div data-role="header" data-position="fixed" data-theme="b">
+		<h1 class="head"></h1>
+		
+			<a href="#about" data-role="button" data-icon="indo" data-iconpos="notext" class="ui-btn-right">About</a>
+			<a href="#statesPanel" data-role="button" data-icon="bars" data-iconpos="notext" class="ui-btn-right">States</a>
+		
+	</div><!-- /head -->
+	
+	<div data-role="content" >
 		<div id="status"></div>  
-        <ul id="linksList" data-role="listview" data-inset="false"></ul>
-    </div>
-
-    <div data-role="footer" data-position="fixed">
-        <h1></h1>
-    </div>
-
-    
+		<ul id="linksList" data-role="listview" data-inset="true">    
+		</ul>
+	</div><!-- /content -->
+	
+	
+	
+	
+	<!--<div data-role="footer" data-position="fixed" data-theme="b">
+		
+	</div>--><!-- /foot -->
 </div>
+
 
 <div data-role="page" id="contentPage">
 
-    <div data-role="header" data-position="fixed">
-        <a href="#mainPage" data-rel="back">Home</a>
-        <h1></h1>
+    <div data-role="header" data-position="fixed"  data-theme="b">
+        <a href="#main" data-rel="back" data-icon="home" data-iconpos="notext">Home</a>
+        <h1 class="head"></h1>
     </div>
 
     <div data-role="content" id="entryText">
     	<div id="entryInfo" class="clearfix">
+    		<div id="imgWrapper" >
+				<img id="largeImg" src=""/>
+    		</div>
+			<div id="entryData">
+				<h3 id="entrytitle">No Data Found</h3> 
+				<span id="description">There is no data found for entry</span>
+			</div>
     	</div>
 		<div id="entryContactInfo">
 			<ul id="infoList" data-role="listview" data-inset="true">
 			</ul>
 		</div>
     </div>
+	
+	<!--<div data-role="footer" data-theme="b" data-position="fixed">
+	</div>--><!-- /foot -->
         
 </div>
 

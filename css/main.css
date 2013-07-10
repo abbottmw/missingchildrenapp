@@ -1,0 +1,106 @@
+/*.ui-page.ui-body-c
+{ 
+	background-image:url('images/background.png');
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-position:center; 
+}*/
+
+
+.ui-icon-mcworld {
+    background-color:transparent;
+    background-image: url("images/world.png");
+     -moz-border-radius: 0px;
+     -webkit-border-radius:0px;
+     border-radius:0px;
+     background-size:18px 18px;
+}
+
+.ui-icon-mcphone {
+    background-color:transparent;
+    background-image: url("images/phone.png");
+     -moz-border-radius: 0px;
+     -webkit-border-radius:0px;
+     border-radius:0px;
+     background-size:18px 18px;
+}
+
+.ui-li-missingdate{
+	color:#5e87b0;
+	font-style:italic;
+}
+
+#linksList li {
+	list-style-type:none;
+}
+
+
+/*#linksList .ui-li-thumb {
+    position:absolute; 
+    top:0; 
+    bottom:0; 
+	left:5px;
+	margin:auto; 
+	border:1px solid #000;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}*/
+		
+		 
+		 
+
+		
+
+		#imgWrapper {
+			text-align:center;
+		}
+
+		#imgWrapper img {
+			border:3px solid #000;
+			margin:3px;
+			width:217px;
+			height:269px;
+			background-color:#000;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
+		}
+		
+		
+		
+
+		@media screen and (orientation:portrait) {
+			
+			#imgWrapper img {
+				width:217px;
+				height:269px
+			}
+		
+		}
+		
+		@media all(orientation : landscape){
+			#imgWrapper img {
+				width:217px;
+				height:269px
+			}	
+		}
+
+
+		@media all and (orientation:landscape) {
+			#imgWrapper img {
+				float:left;
+			}
+
+			#entryData {
+				padding:5px 10px;
+			}
+		}
+
+
+		.clearfix:after {
+			visibility: hidden;
+			display: block;
+			font-size: 0;
+			content: " ";
+			clear: both;
+			height: 0;
+			}
