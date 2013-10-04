@@ -4,32 +4,49 @@ var NCMEC = (function() {
 	var _BASE = _BASEURL;
    
 	var xml = "";
-	
+	//simple cache to hold state XML data.
+	var cache={};
+
 	
 	// private functions
     var getData = function( state ) {
 	  if(typeof state != 'undefined' && $.trim(state).length > 0){
 	  	_URL = _BASEURL + '&LanguageCountry=en_US&orgPrefix=NCMC&state=' + state;
-		//console.log(_URL);
 	  }else{
 	  	_URL = _BASE;
 	  }	  
 		
 	  var api = "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=" + encodeURIComponent(_URL);
 	  api += "&output=xml&num=-1&callback=?"	
-	
-	  
 		
-      return $.ajax({
+	  //check if state is in cache object, else retrieve data via ajax.	
+	  if( cache.hasOwnProperty( state )){
+	  	
+		//setup Deferred 
+	  	var def = $.Deferred();
+		var res = cache[state];
+		// resolve the deferred with res cache[state] object
+		def.resolve(res);
+		//return deferred
+		return def;
+		
+	  }else{
+	  	 
+		 return $.ajax({
 			asynch: true,
 			type:'GET',
 			dataType: 'json',
 			url: api,
 			data: {},
 			success: function(data, textStatus){
+				cache[state] = data;
 				xml = $.parseXML(data.responseData.xmlString);
 			}
 		});
+		
+	  }
+		
+     
 		
 	 
    };
@@ -72,6 +89,8 @@ var NCMEC = (function() {
 		if (re.test($.trim(result.description))) {
 			result.phone = result.description.match(re);
 		}
+		
+		result.phone.push('1-800-843-5678');
 
 		if (reDate.test(result.description)) {
 			result.missingSince = "Missing since " + result.description.replace(reDate,"$1");
@@ -96,7 +115,7 @@ var NCMEC = (function() {
 	  	  }
 
 		
-	   //console.log(s);	
+
          return getData(s);
       },
 	  
