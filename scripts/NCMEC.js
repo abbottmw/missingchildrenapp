@@ -25,9 +25,9 @@ var NCMEC = (function() {
 		//setup Deferred 
 	  	var def = $.Deferred();
 		var res = cache[state];
-		
+		// resolve the deferred with res cache[state] object
 		def.resolve(res);
-		
+		//return deferred
 		return def;
 		
 	  }else{
