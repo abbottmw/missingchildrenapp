@@ -1,6 +1,6 @@
 var entries = [];
 var selectedEntry = "";
-
+var _currentState = "";
 
 
 	//Listen for main page
@@ -10,7 +10,7 @@ var selectedEntry = "";
 		$("h1", this).text('Missing Children Alert Cases');
 		//$('.ui-li-thumb').one('error', function() { this.src = 'images/pnf.png'; });
 		
-		getData('');
+		getData(_currentState);
 	
 	});
 
@@ -36,6 +36,7 @@ var selectedEntry = "";
 	$(document).on("click", ".stateLink", function(e) {
 			var item = $(this);
 			var state = $(item).data("state");
+			_currentState = state;
 			//console.log(state);
 			getData($.trim(state));
 			
@@ -43,7 +44,25 @@ var selectedEntry = "";
 
 
 	$(document).on("pagebeforeshow", "#contentPage", function(prepage) {
+		
+		
 		var entry = entries[selectedEntry];
+		var eText = $('#entryText');
+		
+		//test if entry is empty (usually by refresh of page), redirect to #main
+		//TODO:  look into possible better way to handle this.
+		
+		if(!entry){
+			
+			$(eText).hide();
+			$.mobile.changePage("#main", {transition:'none'});
+			
+			return false;
+		}else{
+			$(eText).show();
+		}
+		
+		
 		var phone = entry.phone;
 		$("h1", this).text(entry.title);
 		$('#imgWrapper #largeImg',this).attr({'src':entry.imgBig});
